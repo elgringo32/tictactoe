@@ -1,7 +1,6 @@
 const gameBoard = document.getElementById('game-board')
     var i;
     for (i=0; i<9; i++) {
-        console.log(i);
         const gridBlock = document.createElement('div');
         gridBlock.classList.add('grid-block');
         gameBoard.appendChild(gridBlock);
@@ -27,6 +26,7 @@ const Player = (name, position) => {
 const player1 = Player('brian', 1);
 const player2 = Player('cruz', 2);
 
+player1.playTurn();
 
 //Board Module
 const gameBord = (() => {
