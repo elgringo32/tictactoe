@@ -34,32 +34,80 @@ function switchPlayer() {
 
 
 //Board Module
-function gameBoardBuilder(){
+// function gameBoardBuilder(){
+//     const gameBoard = document.getElementById('game-board');
+//         var i;
+//         for (i=0; i<9; i++) {
+//             const gridBlock = document.createElement('div');
+//             gridBlock.classList.add('grid-block');
+//             gridBlock.setAttribute('data-cell-id', i+1);
+//             gameBoard.appendChild(gridBlock);
+
+//         };
+//     let gameBoardCells = document.querySelectorAll('.grid-block');
+//     gameBoardCells.forEach(cell => cell.addEventListener('click', markCell));    
+// }
+
+const gameBoard = (() => {
+    const buildNew = () => {
     const gameBoard = document.getElementById('game-board');
-        var i;
+        let i;
         for (i=0; i<9; i++) {
             const gridBlock = document.createElement('div');
             gridBlock.classList.add('grid-block');
             gridBlock.setAttribute('data-cell-id', i+1);
             gameBoard.appendChild(gridBlock);
-
+            
         };
     let gameBoardCells = document.querySelectorAll('.grid-block');
-    gameBoardCells.forEach(cell => cell.addEventListener('click', markCell));    
-    }
-
-
-function markCell() {
-    if (!this.innerText) {
-        let mark = currentPlayer.playTurn();
-        this.innerText = mark;
-        switchPlayer();
-    }
-    else {
-        alert('square is already taken :(')
-    }
+    gameBoardCells.forEach(cell => cell.addEventListener('click', markCell)); 
+    }  
     
-}
+    const markCell = (divGridBlock) => {
+        let cell = divGridBlock.path[0];
+        if (!cell.innerText) {
+            let mark = currentPlayer.playTurn();
+            cell.innerText = mark;
+            switchPlayer();
+        }
+        else {
+            alert('square is already taken :(')
+        }
+    }
+    return {buildNew,markCell};
+})();
 
-gameBoardBuilder();
+// const gameBoardArray = (() => {
+//     const 1 = () => {}
+//     const 2 = () => {}
+//     const three = () => {}
+//     const four = () => {}
+//     const two = () => {}
+//     const two = () => {}
+//     const two = () => {}
+//     const two = () => {}
+//     const two = () => {}
+
+// });
+let gameBoardArray = new Array(9);
+    console.log(gameBoardArray);
+    gameBoardArray[2] = 'x';
+    console.log(gameBoardArray);
+    gameBoardArray[3] = 'o';
+    console.log(gameBoardArray);
+
+
+// function markCell() {
+//     if (!this.innerText) {
+//         let mark = currentPlayer.playTurn();
+//         this.innerText = mark;
+//         switchPlayer();
+//     }
+//     else {
+//         alert('square is already taken :(')
+//     }
+    
+// }
+
+gameBoard.buildNew();
 
