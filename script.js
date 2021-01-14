@@ -22,6 +22,8 @@ const player2 = Player('cruz', 2);
 
 let currentPlayer = player1;
 
+
+
 function switchPlayer() {
     if (currentPlayer === player1) {
         currentPlayer = player2;
@@ -31,7 +33,6 @@ function switchPlayer() {
     }; 
     return currentPlayer;
 }
-
 
 //Board Module
 // function gameBoardBuilder(){
@@ -68,15 +69,21 @@ const gameBoard = (() => {
         if (!cell.innerText) {
             let mark = currentPlayer.playTurn();
             cell.innerText = mark;
-            arrayPosition = cell.dataset.cellId;
-            boardArray[arrayPosition]= mark;
-            console.log(boardArray);
+            updateArray(cell,mark);
             checkWinner.horizontalCheck();
+            checkWinner.verticalCheck();
+            checkWinner.diagonalCheck();
             switchPlayer();
         }
         else {
             alert('square is already taken :(')
         }
+    }
+
+    const updateArray = (cell,mark) => {
+            arrayPosition = cell.dataset.cellId;
+            boardArray[arrayPosition]= mark;
+            console.log(boardArray);
     }
 
     
@@ -87,12 +94,54 @@ const checkWinner = (() => {
     const horizontalCheck = () => {
         if (boardArray[1] && boardArray[2] && boardArray[3]) {
             if(boardArray[1]===boardArray[2] && boardArray[2]===boardArray[3]) {
-                console.log(currentPlayer.getName());
+                console.log('horizontal ' + currentPlayer.getName());
             }
-        }   
+        }
+        if (boardArray[4] && boardArray[5] && boardArray[6]) {
+            if(boardArray[4]===boardArray[5] && boardArray[5]===boardArray[6]) {
+                console.log('horizontal ' + currentPlayer.getName());
+            }
+        }
+        if (boardArray[7] && boardArray[8] && boardArray[9]) {
+            if(boardArray[7]===boardArray[8] && boardArray[8]===boardArray[9]) {
+                console.log('horizontal ' + currentPlayer.getName());
+            }
+        }       
     }
+    const verticalCheck = () => {
+        if (boardArray[1] && boardArray[4] && boardArray[7]) {
+            if(boardArray[1]===boardArray[4] && boardArray[4]===boardArray[7]) {
+                console.log('vertical ' + currentPlayer.getName());
+            }
+        }
+        if (boardArray[2] && boardArray[5] && boardArray[8]) {
+            if(boardArray[2]===boardArray[5] && boardArray[5]===boardArray[8]) {
+                console.log('vertical ' + currentPlayer.getName());
+            }
+        }
+        if (boardArray[3] && boardArray[6] && boardArray[9]) {
+            if(boardArray[3]===boardArray[6] && boardArray[6]===boardArray[9]) {
+                console.log('vertical ' + currentPlayer.getName());
+            }
+        }       
+    }
+    const diagonalCheck = () => {
+        if (boardArray[1] && boardArray[5] && boardArray[9]) {
+            if(boardArray[1]===boardArray[5] && boardArray[5]===boardArray[9]) {
+                console.log('diagonal ' + currentPlayer.getName());
+            }
+        }
+        if (boardArray[3] && boardArray[5] && boardArray[7]) {
+            if(boardArray[3]===boardArray[5] && boardArray[5]===boardArray[7]) {
+                console.log('diagonal ' + currentPlayer.getName());
+            }
+        }     
+    }
+
     return {
-        horizontalCheck
+        horizontalCheck, 
+        verticalCheck,
+        diagonalCheck
     }
 })();
 
