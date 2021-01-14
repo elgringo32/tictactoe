@@ -47,7 +47,7 @@ function switchPlayer() {
 //     let gameBoardCells = document.querySelectorAll('.grid-block');
 //     gameBoardCells.forEach(cell => cell.addEventListener('click', markCell));    
 // }
-
+let  boardArray = new Array(9);
 const gameBoard = (() => {
     const buildNew = () => {
     const gameBoard = document.getElementById('game-board');
@@ -68,46 +68,42 @@ const gameBoard = (() => {
         if (!cell.innerText) {
             let mark = currentPlayer.playTurn();
             cell.innerText = mark;
+            arrayPosition = cell.dataset.cellId;
+            boardArray[arrayPosition]= mark;
+            console.log(boardArray);
+            checkWinner.horizontalCheck();
             switchPlayer();
         }
         else {
             alert('square is already taken :(')
         }
     }
-    return {buildNew,markCell};
+
+    
+    return {buildNew,markCell,boardArray};
 })();
 
-// const gameBoardArray = (() => {
-//     const 1 = () => {}
-//     const 2 = () => {}
-//     const three = () => {}
-//     const four = () => {}
-//     const two = () => {}
-//     const two = () => {}
-//     const two = () => {}
-//     const two = () => {}
-//     const two = () => {}
-
-// });
-let gameBoardArray = new Array(9);
-    console.log(gameBoardArray);
-    gameBoardArray[2] = 'x';
-    console.log(gameBoardArray);
-    gameBoardArray[3] = 'o';
-    console.log(gameBoardArray);
+const checkWinner = (() => {
+    const horizontalCheck = () => {
+        if (boardArray[1] && boardArray[2] && boardArray[3]) {
+            if(boardArray[1]===boardArray[2] && boardArray[2]===boardArray[3]) {
+                console.log(currentPlayer.getName());
+            }
+        }   
+    }
+    return {
+        horizontalCheck
+    }
+})();
 
 
-// function markCell() {
-//     if (!this.innerText) {
-//         let mark = currentPlayer.playTurn();
-//         this.innerText = mark;
-//         switchPlayer();
-//     }
-//     else {
-//         alert('square is already taken :(')
-//     }
-    
-// }
+    //     else if(boardArray[4]===boardArray[5] && boardArray[5]===boardArray[6]) {
+    //         console.log(currentPlayer.getName());
+    //     }
+    //     else if(boardArray[7]===boardArray[8] && boardArray[8]===boardArray[9]) {
+    //         console.log(currentPlayer.getName());
+    //     }
+
 
 gameBoard.buildNew();
 
