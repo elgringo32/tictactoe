@@ -34,35 +34,27 @@ function switchPlayer() {
     return currentPlayer;
 }
 
-//Board Module
-// function gameBoardBuilder(){
-//     const gameBoard = document.getElementById('game-board');
-//         var i;
-//         for (i=0; i<9; i++) {
-//             const gridBlock = document.createElement('div');
-//             gridBlock.classList.add('grid-block');
-//             gridBlock.setAttribute('data-cell-id', i+1);
-//             gameBoard.appendChild(gridBlock);
-
-//         };
-//     let gameBoardCells = document.querySelectorAll('.grid-block');
-//     gameBoardCells.forEach(cell => cell.addEventListener('click', markCell));    
-// }
 let  boardArray = new Array(9);
+
 const gameBoard = (() => {
-    const buildNew = () => {
-    const gameBoard = document.getElementById('game-board');
+    const board = document.getElementById('game-board');
+    const create = () => {
         let i;
         for (i=0; i<9; i++) {
             const gridBlock = document.createElement('div');
             gridBlock.classList.add('grid-block');
             gridBlock.setAttribute('data-cell-id', i+1);
-            gameBoard.appendChild(gridBlock);
+            board.appendChild(gridBlock);
             
         };
-    let gameBoardCells = document.querySelectorAll('.grid-block');
-    gameBoardCells.forEach(cell => cell.addEventListener('click', markCell)); 
-    }  
+    let boardCells = document.querySelectorAll('.grid-block');
+    boardCells.forEach(cell => cell.addEventListener('click', markCell)); 
+    }
+    
+    const reset = () => {
+        board.innerHTML = '';
+        gameBoard.create();
+    }
     
     const markCell = (divGridBlock) => {
         let cell = divGridBlock.path[0];
@@ -83,11 +75,10 @@ const gameBoard = (() => {
     const updateArray = (cell,mark) => {
             arrayPosition = cell.dataset.cellId;
             boardArray[arrayPosition]= mark;
-            console.log(boardArray);
     }
 
     
-    return {buildNew,markCell,boardArray};
+    return {create, reset, markCell, boardArray};
 })();
 
 const checkWinner = (() => {
@@ -154,5 +145,5 @@ const checkWinner = (() => {
     //     }
 
 
-gameBoard.buildNew();
+gameBoard.create();
 
