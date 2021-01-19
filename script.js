@@ -17,43 +17,57 @@ const Player = (name, position) => {
     }
 }
 
-const player1 = Player('brian', 1);
-const player2 = Player('cruz', 2);
-
-let currentPlayer = player1;
-
-
-
-function switchPlayer() {
-    if (currentPlayer === player1) {
-        currentPlayer = player2;
-    }
-    else if (currentPlayer === player2) {
-        currentPlayer = player1;
-    }; 
-    return currentPlayer;
+function createPlayers() {
+        let playerArray = [];
+        playerName1 = document.querySelector('#player-name-1').value;
+        playerName2 = document.querySelector('#player-name-2').value;
+        const player1 = Player(playerName1,1);
+        playerArray.push(player1);
+        const player2 = Player(playerName2,2);
+        playerArray.push(player2);
+        game.setPlayers(playerArray);
+        game.createBoard();
 }
+
+const getStartedButton = document.querySelector('#add-players-button');
+getStartedButton.addEventListener('click', createPlayers);
 
 let  boardArray = new Array(9);
 
-const gameBoard = (() => {
+const game = (() => {
     const board = document.getElementById('game-board');
-    const create = () => {
+
+    const setPlayers = (playerArray) => {
+        currentPlayer = playerArray[0];
+        player1 = playerArray[0];
+        player2 = playerArray[1];
+    }
+    const createBoard = () => {
         let i;
         for (i=0; i<9; i++) {
             const gridBlock = document.createElement('div');
             gridBlock.classList.add('grid-block');
             gridBlock.setAttribute('data-cell-id', i+1);
             board.appendChild(gridBlock);
-            
         };
-    let boardCells = document.querySelectorAll('.grid-block');
-    boardCells.forEach(cell => cell.addEventListener('click', markCell)); 
+
+        let boardCells = document.querySelectorAll('.grid-block');
+        boardCells.forEach(cell => cell.addEventListener('click', markCell)); 
+    }
+
+    const switchPlayer = () => {
+        if (currentPlayer === player1) {
+            currentPlayer = player2;
+        }
+        else if (currentPlayer === player2) {
+            currentPlayer = player1;
+        }; 
+        return currentPlayer;
     }
     
     const reset = () => {
         board.innerHTML = '';
-        gameBoard.create();
+        game.createBoard();
     }
     
     const markCell = (divGridBlock) => {
@@ -77,8 +91,7 @@ const gameBoard = (() => {
             boardArray[arrayPosition]= mark;
     }
 
-    
-    return {create, reset, markCell, boardArray};
+    return {setPlayers, createBoard, reset, markCell, boardArray};
 })();
 
 const checkWinner = (() => {
@@ -145,5 +158,5 @@ const checkWinner = (() => {
     //     }
 
 
-gameBoard.create();
+
 
