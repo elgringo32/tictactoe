@@ -17,20 +17,29 @@ const Player = (name, position) => {
     }
 }
 
-function createPlayers() {
+
+function setResetButton() {
+    let startButton = document.getElementById('start-button');
+    startButton.style.display = 'none';
+    let resetButton = document.getElementById('reset-button');
+    resetButton.style.display = 'block';
+}
+
+function startGame() {
         let playerArray = [];
-        playerName1 = document.querySelector('#player-name-1').value;
-        playerName2 = document.querySelector('#player-name-2').value;
+        let playerName1 = document.querySelector('#player-name-1').value;
+        let playerName2 = document.querySelector('#player-name-2').value;
         const player1 = Player(playerName1,1);
         playerArray.push(player1);
         const player2 = Player(playerName2,2);
         playerArray.push(player2);
         game.setPlayers(playerArray);
-        game.createBoard();
+        setResetButton();
+        game.reset();
 }
 
-const getStartedButton = document.querySelector('#add-players-button');
-getStartedButton.addEventListener('click', createPlayers);
+const getStartedButton = document.getElementById('start-game-button');
+getStartedButton.addEventListener('click', startGame);
 
 let  boardArray = new Array(9);
 
@@ -41,6 +50,15 @@ const game = (() => {
         currentPlayer = playerArray[0];
         player1 = playerArray[0];
         player2 = playerArray[1];
+        let divPlayer1 = document.getElementById('player-1');
+        let headingName1 =  document.createElement('h2');
+        headingName1.innerText = player1.getName();
+        divPlayer1.appendChild(headingName1);
+
+        let divPlayer2 = document.getElementById('player-2');
+        let headingName2 =  document.createElement('h2');
+        headingName2.innerText = player2.getName();
+        divPlayer2.appendChild(headingName2);
     }
     const createBoard = () => {
         let i;
@@ -68,6 +86,7 @@ const game = (() => {
     const reset = () => {
         board.innerHTML = '';
         game.createBoard();
+        boardArray = [];
     }
     
     const markCell = (divGridBlock) => {
@@ -158,5 +177,5 @@ const checkWinner = (() => {
     //     }
 
 
-
+game.createBoard();
 

@@ -18,11 +18,15 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <header>
-            <div id="game-title"></div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Start Game
+            <div id="start-button">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Start Game
+                </button>
+            </div>
+            <div id="reset-button" style='display:none'><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Reset
             </button>
-            <div id="reset-button"></div>
+            </div>
         </header>
         <div id="game-section">
             <div id="player-1" class="item"></div>
@@ -47,7 +51,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id='add-players-button' type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">Let's Go!</button>
+                <button id='start-game-button' type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">Let's Go!</button>
                 </div>
             </div>
             </div>
