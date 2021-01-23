@@ -1,3 +1,10 @@
+let playerArray = [];
+let player1
+let player2
+let currentPlayer
+let maxPlays = 9;
+let gameOver = false;
+
 //Player Factory
 const Player = (name, position) => {
 	const getName = () => name;
@@ -25,14 +32,19 @@ function setResetButton() {
     resetButton.style.display = 'block';
 }
 
-function startGame() {
-        let playerArray = [];
+
+function getPlayerNames() {
         let playerName1 = document.querySelector('#player-name-1').value;
         let playerName2 = document.querySelector('#player-name-2').value;
         const player1 = Player(playerName1,1);
         playerArray.push(player1);
         const player2 = Player(playerName2,2);
         playerArray.push(player2);
+}
+
+function startGame() {
+        getPlayerNames();
+        game.resetNames();
         game.setPlayers(playerArray);
         setResetButton();
         game.reset();
@@ -50,6 +62,7 @@ const game = (() => {
         currentPlayer = playerArray[0];
         player1 = playerArray[0];
         player2 = playerArray[1];
+
         let divPlayer1 = document.getElementById('player-1');
         let headingName1 =  document.createElement('h2');
         headingName1.innerText = player1.getName();
@@ -83,6 +96,12 @@ const game = (() => {
         return currentPlayer;
     }
     
+    const resetNames = () => {
+        document.getElementById('player-2').innerText = '';
+        document.getElementById('player-1').innerText = '';
+    }
+
+
     const reset = () => {
         board.innerHTML = '';
         game.createBoard();
@@ -110,7 +129,13 @@ const game = (() => {
             boardArray[arrayPosition]= mark;
     }
 
-    return {setPlayers, createBoard, reset, markCell, boardArray};
+    return {
+        setPlayers, 
+        createBoard, 
+        resetNames,
+        reset, 
+        markCell, 
+        boardArray};
 })();
 
 const checkWinner = (() => {
@@ -161,21 +186,17 @@ const checkWinner = (() => {
         }     
     }
 
+    const declareWinner = () => {
+        return $('#winnerModal').modal('show');
+    }
+
     return {
         horizontalCheck, 
         verticalCheck,
-        diagonalCheck
+        diagonalCheck,
+        declareWinner
     }
 })();
-
-
-    //     else if(boardArray[4]===boardArray[5] && boardArray[5]===boardArray[6]) {
-    //         console.log(currentPlayer.getName());
-    //     }
-    //     else if(boardArray[7]===boardArray[8] && boardArray[8]===boardArray[9]) {
-    //         console.log(currentPlayer.getName());
-    //     }
-
 
 game.createBoard();
 
